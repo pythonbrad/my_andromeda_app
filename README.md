@@ -1,24 +1,66 @@
-# README
+# Andromeda Galaxy Discovery Uploader Two
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+### Requirements
 
-Things you may want to cover:
+- [Ruby on Rails](https://guides.rubyonrails.org/install_ruby_on_rails.html)
+- [Postgres server](https://www.postgresql.org/download/) (*optional*)
+- [Docker](https://docs.docker.com/get-started/get-docker/) (*optional*)
 
-* Ruby version
+### Installation
 
-* System dependencies
+Clone the repo.
 
-* Configuration
+```sh
+git clone https://github.com/pythonbrad/my_andromeda_app
+```
 
-* Database creation
+You will need to create three databases, one for the development and the second for the test and the last for the production.
 
-* Database initialization
+```sh
+createdb -h <hostname> -U <username> my_andromeda_app_development;
+createdb -h <hostname> -U <username> my_andromeda_app_test;
+createdb -h <hostname> -U <username> my_andromeda_app;
+```
 
-* How to run the test suite
+**Without Docker**
 
-* Services (job queues, cache servers, search engines, etc.)
+Install dependencies.
 
-* Deployment instructions
+```sh
+bundle install
+```
 
-* ...
+Config your virtual environment.
+
+```sh
+export RDS_USERNAME=postgres
+export RDS_PASSWORD=mysecret
+export RDS_HOST=postgres
+export RDS_DB_NAME=my_andromeda_app
+```
+
+Prepare the migrations
+
+```sh
+rails db:migrate
+```
+
+**With Docker**
+
+```sh
+docker build . -t my_andromeda_app
+```
+
+### Deployment
+
+- Without docker
+
+```sh
+rails server
+```
+
+- Using docker
+
+```sh
+docker run --rm -p 80:80 -e SECRET_KEY_BASE=secret -e RDS_HOSTNAME=172.17.0.1 -e RDS_PASSWORD=mysecret -e RDS_USERNAME=postgres --name my_andromeda_app my_andromeda_app
+```
