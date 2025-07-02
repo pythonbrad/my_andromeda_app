@@ -18,9 +18,10 @@ default: &default
   # For details on connection pooling, see Rails configuration guide
   # https://guides.rubyonrails.org/configuring.html#database-pooling
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-  username: <%= ENV['DB_USERNAME'] %>
-  password: <%= ENV['DB_PASSWORD'] %>
-  host: <%= ENV['DB_HOST'] %>
+  username: <%= ENV['RDS_USERNAME'] %>
+  password: <%= ENV['RDS_PASSWORD'] %>
+  host: <%= ENV['RDS_HOSTNAME'] %>
+  port: <%= ENV['RDS_PORT'] %>
 
 
 development:
@@ -84,7 +85,7 @@ test:
 production:
   primary: &primary_production
     <<: *default
-    database: my_andromeda_app_production
+    database: <%= ENV['RDS_DB_NAME'] %>
     # username: my_andromeda_app
     # password: <%= ENV["MY_ANDROMEDA_APP_DATABASE_PASSWORD"] %>
   cache:
